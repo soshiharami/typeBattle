@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
 const typeWordStore = writable("");
 
@@ -13,12 +13,12 @@ socket.addEventListener("message", (e) => {
 });
 
 const sendType = (data: string) => {
-  if (socket.readyState <= 1){
+  if (socket.readyState <= 1) {
     socket.send(data);
   }
-}
+};
 
 export default {
   subscribable: typeWordStore.subscribe,
-  sendType
-}
+  sendType,
+};

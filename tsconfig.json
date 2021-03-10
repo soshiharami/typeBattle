@@ -1,6 +1,6 @@
 {
-	"include": ["src/**/*", "webpack.config.ts"],
-	"exclude": ["node_modules/*", "__sapper__/*", "public/*"],
+	"include": ["src/**/*"],
+	"exclude": ["node_modules/*", "__sapper__/*", "public/*", "webpack.config.ts"],
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"target": "es2017",
@@ -8,8 +8,9 @@
 		"isolatedModules": true,
 		"esModuleInterop": true,
 		"sourceMap": true,
-		"strict": false,
+		"strict": true,
 		"baseUrl": ".",
+		"resolveJsonModule": true,
 		"paths": {
 			"src/*": ["src/*"]
 		},

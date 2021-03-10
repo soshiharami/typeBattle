@@ -5,6 +5,7 @@
  *
  * Browserslist documentation: https://github.com/browserslist/browserslist#browserslist-
  */
+
 const useBabel = true;
 
 /**
@@ -34,10 +35,10 @@ const sourceMapsInProduction = false;
 
 import Webpack from 'webpack';
 import WebpackDev from 'webpack-dev-server';
-import SveltePreprocess from 'svelte-preprocess';
 import Autoprefixer from 'autoprefixer';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import sveltePreprocess from "svelte-preprocess"
 
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
@@ -47,6 +48,7 @@ import path from 'path';
 const mode = process.env.NODE_ENV ?? 'development';
 const isProduction = mode === 'production';
 const isDevelopment = !isProduction;
+
 
 const config: Configuration = {
 	mode: isProduction ? 'production' : 'development',
@@ -90,15 +92,12 @@ const config: Configuration = {
 							noPreserveState: false,
 							optimistic: true,
 						},
-						preprocess: SveltePreprocess({
+						preprocess: sveltePreprocess({
 							scss: true,
-							sass: true,
 							postcss: {
-								plugins: [
-									<any>Autoprefixer
-								]
-							}
-						})
+								plugins: [require('autoprefixer')({ grid: true })],
+							},
+						}),
 					}
 				}
 			},
@@ -237,6 +236,7 @@ if ('compilerOptions' in tsconfig && 'paths' in tsconfig.compilerOptions) {
 
 		if (config.resolve && config.resolve.alias) {
 			if (!(wpAlias in config.resolve.alias) && wpPaths.length) {
+				// @ts-ignore
 				config.resolve.alias[wpAlias] = wpPaths.length > 1 ? wpPaths : wpPaths[0];
 			}
 		}
@@ -264,7 +264,7 @@ if (useBabel && (isProduction || useBabelInDevelopment)) {
 		}
 	};
 
-	config.module?.rules.unshift({
+	config.module?.rules?.unshift({
 		test: /\.(?:m?js|ts)$/,
 		include: [
 			path.resolve(__dirname, 'src'),
@@ -276,7 +276,7 @@ if (useBabel && (isProduction || useBabelInDevelopment)) {
 		use: loader,
 	});
 
-	const svelte = config.module?.rules.find(rule => {
+	const svelte = config.module?.rules?.find(rule => {
 		if (typeof rule !== 'object') return false;
 		else if (Array.isArray(rule.use))
 			return rule.use.includes((e: any) => typeof e.loader === 'string' && e.loader.startsWith('svelte-loader'));
