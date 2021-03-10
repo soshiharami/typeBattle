@@ -10,8 +10,6 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'prettier',
-    'google',
   ],
   plugins: [
     'prettier',
