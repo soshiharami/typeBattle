@@ -3,7 +3,7 @@
 
   let userData = store.userData;
   let matchData = store.matchData;
-  let word: string[] = new Array(5);
+  let word = new Array(5);
 
   const join = () => {
     const sendMessage = {

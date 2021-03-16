@@ -6,7 +6,7 @@
   let enemyTypeWord = '';
   let userData = store.userData;
   let matchData = store.matchData;
-  let words: string[] = []
+  let words = []
 
   onMount(() => {
     store.subscribable((currentType) => {
