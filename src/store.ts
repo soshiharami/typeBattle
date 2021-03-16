@@ -20,16 +20,21 @@ const sendType = (data: string) => {
 };
 
 const userData = writable({
-  name: word.word[Math.floor(Math.random() * word.word.length)],
+  name: "",
   typeWord: '',
   score: 0,
-  room: 0,
   isStart: false,
   isReady: true,
 });
 
+const matchData = writable({
+  word: word.word[Math.floor(Math.random() * word.word.length)],
+  room: 0
+})
+
 export default {
   subscribable: typeWordStore.subscribe,
   sendType,
-  userData: userData
+  userData,
+  matchData
 };
