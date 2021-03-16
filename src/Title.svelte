@@ -42,5 +42,3 @@
 
   <button on:click='{join}'> 入る</button>
 </main>
-
-

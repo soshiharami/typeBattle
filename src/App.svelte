@@ -15,5 +15,3 @@
     <Battle />
   {/if}
 </main>
-
-
