@@ -1,19 +1,29 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import word from 'src/word.json';
   import store from 'src/store';
 
   const nullSendWebSocket = { message: '', room: null, meta: 'null' };
   let enemyTypeWord = '';
   let userData = store.userData;
   let matchData = store.matchData;
-  let words = word.word
+  let words: string[] = []
 
   onMount(() => {
     store.subscribable((currentType) => {
       const tmpEnemyData = JSON.parse(currentType || JSON.stringify(nullSendWebSocket));
       if (tmpEnemyData.meta === "word"){
-        words = words.concat(tmpEnemyData.message)
+        words = words.concat(tmpEnemyData.message).filter((x, i, self) => {
+          return self.indexOf(x) === i;
+        })
+        $matchData.word = words[Math.floor(Math.random() * words.length)];
+      } if(tmpEnemyData.meta === "join"){
+        const sendWord = {
+          message: words,
+          roomId: $matchData.room,
+          meta: 'word',
+        };
+        store.sendType(JSON.stringify(sendWord))
+        console.log("じょいん")
       } else if ($userData.typeWord != tmpEnemyData.message) {
         enemyTypeWord = tmpEnemyData.message;
       }
@@ -43,7 +53,8 @@
   <h1>{$userData.typeWord}</h1>
   <h1>{enemyTypeWord}</h1>
   <label on:input="{checkString}">
-    <input type="text" bind:value="{$userData.typeWord}" oncopy="return false" onpaste="return false" oncontextmenu="return false" />
+    <input type="text" bind:value="{$userData.typeWord}" oncopy={"return false"} onpaste={"return false"}
+    oncontextmenu={"return false"} />
   </label>
   score {$userData.score}
 </main>

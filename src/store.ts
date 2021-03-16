@@ -20,6 +20,7 @@ const sendType = (data: string) => {
 };
 
 const userData = writable({
+  name: "",
   typeWord: '',
   score: 0,
   isStart: false,
