@@ -16,7 +16,7 @@
           return self.indexOf(x) === i;
         })
         $matchData.word = words[Math.floor(Math.random() * words.length)];
-      } if(tmpEnemyData.meta === "join"){
+      } else if(tmpEnemyData.meta === "join"){
         const sendWord = {
           message: words,
           roomId: $matchData.room,
